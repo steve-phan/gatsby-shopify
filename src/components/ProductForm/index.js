@@ -5,6 +5,8 @@ import PropTypes from 'prop-types'
 
 import StoreContext from '~/context/StoreContext'
 
+import { Price, Select, Options, Option, ProductTab, Input, BuyButton } from './styles'
+
 const ProductForm = ({ product }) => {
   const {
     options,
@@ -94,51 +96,57 @@ const ProductForm = ({ product }) => {
     minimumFractionDigits: 2,
     style: 'currency',
   }).format(variant.price)
-
   return (
-    <>
-      <h3>{price}</h3>
+    <ProductTab>
+      <Price> {price} </Price>
       {options.map(({ id, name, values }, index) => (
-        <React.Fragment key={id}>
-          <label htmlFor={name}>{name} </label>
-          <select
-            name={name}
-            key={id}
-            onChange={event => handleOptionChange(index, event)}
-          >
-            {values.map(value => (
-              <option
-                value={value}
-                key={`${name}-${value}`}
-                disabled={checkDisabled(name, value)}
+        <Options key={id}>
+          <label htmlFor={name}>{name}:</label>
+          {values.length > 1 ? (
+              <Select
+                name={name}
+                key={id}
+                onChange={event => handleOptionChange(index, event)}
               >
-                {value}
-              </option>
-            ))}
-          </select>
+                {values.map(value => (
+                  <option
+                    value={value}
+                    key={`${name}-${value}`}
+                    disabled={checkDisabled(name, value)}
+                  >
+                    {value}
+                  </option>
+                ))}
+              </Select>
+          ) : (
+            <Option> {values[0]} </Option>
+          )}
+
           <br />
-        </React.Fragment>
+        </Options>
       ))}
-      <label htmlFor="quantity">Quantity </label>
-      <input
-        type="number"
-        id="quantity"
-        name="quantity"
-        min="1"
-        step="1"
-        onChange={handleQuantityChange}
-        value={quantity}
-      />
+      <Options>
+        <label htmlFor="quantity">Quantity </label>
+          <Input
+            type="text"
+            id="quantity"
+            name="quantity"
+            min="1"
+            step="1"
+            onChange={handleQuantityChange}
+            value={quantity}
+          />
+      </Options>
       <br />
-      <button
+      <BuyButton
         type="submit"
         disabled={!available || adding}
         onClick={handleAddToCart}
       >
         Add to Cart
-      </button>
+      </BuyButton>
       {!available && <p>This Product is out of Stock!</p>}
-    </>
+    </ProductTab>
   )
 }
 

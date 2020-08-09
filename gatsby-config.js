@@ -12,16 +12,11 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `images`,
-        path: `${__dirname}/src/images`,
-      },
-    },
+  
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-layout`,
+    `gatsby-plugin-sass`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -49,13 +44,34 @@ module.exports = {
         // Storefront API".
         // See: https://help.shopify.com/api/custom-storefronts/storefront-api/getting-started#authentication
         accessToken: process.env.SHOPIFY_ACCESS_TOKEN,
+        apiVersion : "2020-07",
 
         // Set verbose to true to display a verbose output on `npm run develop`
         // or `npm run build`. This prints which nodes are being fetched and how
         // much time was required to fetch and process the data.
         // Defaults to true.
         verbose: true,
+        paginationSize: 250,
+        includeCollections: ["shop", "content"],
+        shopifyQueries: {
+          products: `
+            query GetProducts($first: Int!, $after: String) {
+              products(first: $first, after: $after) {
+                pageInfo {
+                  hasNextPage
+                }
+                edges {
+                  cursor
+                  node {
+                    availableForSale
+                  }
+                }
+              }
+            }
+          `,
+        },
       },
+     
     },
     {
       resolve: 'gatsby-plugin-root-import',
