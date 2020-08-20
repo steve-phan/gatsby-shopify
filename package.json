@@ -1,15 +1,16 @@
 {
-  "name": "gatsby-shopify-starter",
-  "private": false,
-  "description": "A simple starter to build a blazing fast Shopify store quickly with Gatsby",
+  "name": "gatsby-firestore-shopify",
+  "private": true,
+  "description": "Build a local delivery store website",
   "version": "0.1.0",
-  "author": "Alexander Hörl <alexander.horl2@live.de>",
+  "author": "HaiNgoc.Phan <lebenistcode@gmail.com>",
   "engines": {
     "node": "=> 10.13 < 10.11"
   },
   "dependencies": {
     "@emotion/core": "^10.0.22",
     "@emotion/styled": "^10.0.22",
+    "emailjs-com": "^2.6.3",
     "gatsby": "^2.17.4",
     "gatsby-image": "^2.2.29",
     "gatsby-plugin-google-analytics": "^2.0.13",
@@ -20,7 +21,7 @@
     "gatsby-plugin-root-import": "^2.0.5",
     "gatsby-plugin-sharp": "^2.2.32",
     "gatsby-source-filesystem": "^2.1.33",
-    "gatsby-source-shopify": "^3.0.24",
+    "gatsby-source-shopify": "^3.2.26",
     "gatsby-transformer-sharp": "^2.3.0",
     "js-yaml": "^3.13.1",
     "lodash": "^4.17.19",
@@ -29,8 +30,11 @@
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-helmet": "^5.2.1",
+    "react-redux": "^7.2.1",
+    "redux": "^4.0.5",
+    "redux-logger": "^3.0.6",
     "set-value": "^2.0.1",
-    "shopify-buy": "^2.8.0"
+    "shopify-buy": "^2.11.0"
   },
   "keywords": [
     "gatsby",

@@ -23,11 +23,17 @@ const ProductForm = ({ product }) => {
     client.product.helpers.variantForOptions(product, variant) || variant
   const [available, setAvailable] = useState(productVariant.availableForSale)
 
+  // const checkAvailability = useCallback(
+  //    product => product.variants[0].availableForSale
+
+  // )
   const checkAvailability = useCallback(
     productId => {
       client.product.fetch(productId).then(fetchedProduct => {
         // this checks the currently selected variant for availability
+        console.log(fetchedProduct)
         const result = fetchedProduct.variants.filter(
+ 
           variant => variant.id === productVariant.shopifyId
         )
         if (result.length > 0) {

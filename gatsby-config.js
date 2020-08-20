@@ -50,6 +50,8 @@ module.exports = {
         // See: https://help.shopify.com/api/custom-storefronts/storefront-api/getting-started#authentication
         accessToken: process.env.SHOPIFY_ACCESS_TOKEN,
 
+        apiVersion: "2020-07",
+
         // Set verbose to true to display a verbose output on `npm run develop`
         // or `npm run build`. This prints which nodes are being fetched and how
         // much time was required to fetch and process the data.
