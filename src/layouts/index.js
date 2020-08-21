@@ -10,6 +10,7 @@ import { GlobalStyle } from '~/utils/styles'
 import Navigation from '~/components/Navigation'
 
 import { store } from './../redux/createStore'
+import  "./main.css"
 
 const Wrapper = styled.div`
   margin: 0 auto;
