@@ -1,0 +1,75 @@
+.wrapper-navigation {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    background: #034a6b;
+    margin-bottom: 1.45rem;
+    height: 70px;
+    box-shadow: 0px 7px 11px -6px #034123;
+    z-index: 2020;
+
+}
+.menulink-main {
+    color : white
+}
+.wrapper-nav {
+    display: flex;
+
+
+    a {
+        display: block;
+    }
+}
+.container-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 1.45rem;
+    margin: 0 auto;
+    max-width: 960px;
+}
+.menulink-nav {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    line-height: 0;
+    
+    @media (max-width: 576px) {
+      font-size: 1.2rem;
+    }
+}
+.registation-link, .login-link {
+    margin-right : 10px;
+    letter-spacing: 0.4px;
+    font-weight: 400;
+}
+.wrapper-cart {
+    position: relative;
+    bottom: 18px;
+    font-size: 1.2rem;
+    
+}
+.login-link {
+   color : aquamarine 
+}
+
+.cartcounter {
+    position: relative;
+    top: -15px;
+    border: 1px solid white;
+    border-radius: 50%;
+    padding: 2px;
+    background: white;
+    color: red;
+    outline: none;
+    font-size: 1rem;
+}
+.nav-link {
+    display: flex;
+    flex-direction: row;
+}
+.cartlogo {
+    color : red;
+    width: 30px;;
+}

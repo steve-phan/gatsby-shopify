@@ -1,12 +1,14 @@
 import React, { useContext } from 'react'
 import reduce from 'lodash/reduce'
 import PropTypes from 'prop-types'
-
+import { Link } from 'gatsby'
 import { useSelector } from 'react-redux'
 
 import StoreContext from '~/context/StoreContext'
-import { CartCounter, Container, MenuLink, Wrapper } from './styles'
+// import { CartCounter, Container, Link, Wrapper } from './styles'
 
+import './styles.scss'
+import ShoppingCart from './../../assets/shopping.svg'
 const mapState = ({ user }) => ({
   currentUser: user.currentUser,
 })
@@ -25,21 +27,30 @@ const Navigation = ({ siteTitle }) => {
   const { currentUser } = useSelector(mapState)
 
   return (
-    <Wrapper>
-      <Container>
-        <MenuLink to="/">{siteTitle}</MenuLink>
-        {currentUser ? (
-          <MenuLink to="/">Your Account</MenuLink>
-        ) : (
-          <MenuLink to="/signin">SignIn</MenuLink>
-        )}
+    <div className='wrapper-navigation'>
+      <div className='container-navigation'>
+        <Link to="/" className="menulink-main" >{siteTitle}</Link>
+        <nav className='wrapper-nav'>
+          {currentUser ? (
+            <Link to="/" className="menulink-nav" >Your Account</Link>
+          ) : (
+            <>
+              <Link  to="/signin" className="menulink-nav login-link">
+                Login
+              </Link>
+              <Link to="/signin" className="menulink-nav registation-link">
+                Registation
+              </Link>
+            </>
+          )}
 
-        <MenuLink to="/cart">
-          {hasItems && <CartCounter>{quantity}</CartCounter>}
-          Cart 🛍
-        </MenuLink>
-      </Container>
-    </Wrapper>
+          <Link  to="/cart" className="menulink-nav wrapper-cart">
+           <ShoppingCart className='cartlogo' />
+            {hasItems && <span className='cartcounter' >{quantity}</span>}
+          </Link>
+        </nav>
+      </div>
+    </div>
   )
 }
 

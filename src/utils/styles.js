@@ -10,6 +10,8 @@ export const breakpoints = {
   xl: 1200,
 }
 
+export const primaryColor = `deeppink`
+
 export const GlobalStyle = props => (
   <Global
     {...props}

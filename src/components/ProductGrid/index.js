@@ -1,14 +1,15 @@
 import React, { useContext } from 'react'
 import { useStaticQuery, graphql, Link } from 'gatsby'
+import Image from 'gatsby-image'
 
 import StoreContext from '~/context/StoreContext'
-import {
-  Grid,
-  Product,
-  Title,
-  PriceTag
-} from './styles'
-import { Img } from '~/utils/styles'
+// import {
+//   Grid,
+//   Product,
+//   Title,
+//   PriceTag
+// } from './styles'
+import './styles.scss'
 
 const ProductGrid = () => {
   const { store: {checkout} } = useContext(StoreContext)
@@ -55,23 +56,24 @@ const ProductGrid = () => {
   }).format(parseFloat(price ? price : 0))
 
   return (
-    <Grid>
+    <div className='wrraper-productGrid'>
       {allShopifyProduct.edges
         ? allShopifyProduct.edges.map(({ node: { id, handle, title, images: [firstImage], variants: [firstVariant] } }) => (
-          <Product key={id} >
+          <div className='product-grid' key={id} >
             <Link to={`/product/${handle}/`}>
               {firstImage && firstImage.localFile &&
-                (<Img
+                (<Image
+                 className='image-ProductGrid'
                   fluid={firstImage.localFile.childImageSharp.fluid}
                   alt={handle}
                 />)}
             </Link>
-            <Title>{title}</Title>
-            <PriceTag>{getPrice(firstVariant.price)}</PriceTag>
-          </Product>
+            <span className='title-productGrid'>{title}</span>
+            <span className='pricetag-productGrid'>{getPrice(firstVariant.price)}</span>
+          </div>
         ))
         : <p>No Products found!</p>}
-    </Grid>
+    </div>
   )
 }
 

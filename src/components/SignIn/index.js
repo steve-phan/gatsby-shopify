@@ -6,6 +6,7 @@ import { signInWithGoogle } from '../../redux/User/user.actions'
 
 import { auth, GoogleProvider } from './../../firebase/utils'
 
+
 const mapState = ({ user }) => ({
   currentUser: user.currentUser,
 })

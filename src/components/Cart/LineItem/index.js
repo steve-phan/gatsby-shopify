@@ -2,7 +2,8 @@ import React, { useContext } from 'react'
 import { Link } from 'gatsby'
 
 import StoreContext from '~/context/StoreContext'
-import { Wrapper } from './styles'
+
+import './styles.scss'
 
 const LineItem = props => {
   const { item } = props
@@ -30,7 +31,7 @@ const LineItem = props => {
   }
 
   return (
-    <Wrapper>
+    <div className='wrapper-LineItem'>
       {console.log(item)}
       <Link to={`/product/${item.variant.product.handle}/`}>
         {variantImage}
@@ -43,7 +44,7 @@ const LineItem = props => {
       {selectedOptions}
       {item.quantity}
       <button onClick={handleRemove}>Remove</button>
-    </Wrapper>
+    </div>
   )
 }
 

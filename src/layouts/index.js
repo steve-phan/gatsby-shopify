@@ -10,12 +10,12 @@ import { GlobalStyle } from '~/utils/styles'
 import Navigation from '~/components/Navigation'
 
 import { store } from './../redux/createStore'
-import  "./main.css"
+import  "./styles.scss"
 
 const Wrapper = styled.div`
   margin: 0 auto;
   max-width: 960px;
-  padding: 0px 1.0875rem 1.45rem;
+  padding: 80px 1.0875rem 1.45rem;
 `
 
 const Layout = ({ children }) => {
@@ -36,14 +36,14 @@ const Layout = ({ children }) => {
           render={data => (
             <>
               <Navigation siteTitle={data.site.siteMetadata.title} />
-              <Wrapper>
+              <div className='wrapper-layout'>
                 {children}
                 <footer>
                   © {new Date().getFullYear()}, Built with
                   {` `}
                   <a href="https://www.gatsbyjs.org">Gatsby</a>
                 </footer>
-              </Wrapper>
+              </div>
             </>
           )}
         />
