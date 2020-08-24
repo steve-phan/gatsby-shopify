@@ -1,9 +1,10 @@
+$maincolor : #034a6b;
 .wrapper-navigation {
     position: fixed;
     top: 0;
     right: 0;
     left: 0;
-    background: #034a6b;
+    background: $maincolor;
     margin-bottom: 1.45rem;
     height: 70px;
     box-shadow: 0px 7px 11px -6px #034123;

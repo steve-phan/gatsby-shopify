@@ -35,10 +35,10 @@ const Navigation = ({ siteTitle }) => {
             <Link to="/" className="menulink-nav" >Your Account</Link>
           ) : (
             <>
-              <Link  to="/signin" className="menulink-nav login-link">
+              <Link  to="/login" className="menulink-nav login-link">
                 Login
               </Link>
-              <Link to="/signin" className="menulink-nav registation-link">
+              <Link to="/registation" className="menulink-nav registation-link">
                 Registation
               </Link>
             </>

@@ -4,7 +4,7 @@ import { Link } from 'gatsby'
 import { useDispatch, useSelector } from 'react-redux'
 import { signInWithGoogle } from '../../redux/User/user.actions'
 
-import { auth, GoogleProvider } from './../../firebase/utils'
+import { auth, GoogleProvider, handleUserProfile } from './../../firebase/utils'
 
 
 const mapState = ({ user }) => ({
@@ -18,7 +18,13 @@ const SignIn = () => {
     e.preventDefault()
     auth
       .signInWithPopup(GoogleProvider)
-      .then(() => {
+      .then((user) => {
+        const additionalData = user.user.displayName
+        
+        console.log(additionalData)
+        const userAuth = user.user
+        handleUserProfile({ userAuth, additionalData })
+
         dispatch(signInWithGoogle())
       })
       .catch(err => {

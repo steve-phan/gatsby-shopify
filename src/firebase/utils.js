@@ -8,6 +8,7 @@ export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
 export const GoogleProvider = new firebase.auth.GoogleAuthProvider();
+export const FacebookProvider = new firebase.auth.FacebookAuthProvider()
 
 
 export const PhoneAuthProvider = new firebase.auth.PhoneAuthProvider();
@@ -37,7 +38,7 @@ export const handleUserProfile = async ({userAuth, additionalData}) => {
 
         })
       } catch (err) {
-        //   console.log(err)
+          console.log(err)
       }
   }
   return userRef;

@@ -2,13 +2,13 @@ import React from 'react'
 import { Container } from '../utils/styles'
 import SignIn from '../components/SignIn'
 
-function SignInPage() {
+function Login() {
     return (
       <Container>
-          <h1>Sign</h1>
+          <h1>Login</h1>
          <SignIn />
       </Container>
     )
 }
 
-export default SignInPage
+export default Login
