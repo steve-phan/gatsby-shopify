@@ -1,49 +1,56 @@
-import {takeLatest, call, all , put } from 'redux-saga/effects'
-import userTypes from "./user.types";
-import { signInSuccess  } from "./user.actions";
-import { getCurrentUser, handleUserProfile } from '../../firebase/utils';
+import { takeLatest, call, all, put } from 'redux-saga/effects'
+import userTypes from './user.types'
+import { signInSuccess } from './user.actions'
+import { getCurrentUser, handleUserProfile, auth } from '../../firebase/utils'
 
-
-export function* getSnapshotFromUserAuth(user, additionalData ={}) {
-    try {
-const userRef = yield call(handleUserProfile, {
-    userAuth : user,
-    additionalData,
-})
-const snapshot = yield userRef.get();
-yield put(signInSuccess({
-    id : snapshot.id,
-    ...snapshot.data()
-}))
-        
-    } catch (error) {
-        console.log(error)
-    }
+export function* getSnapshotFromUserAuth(user, additionalData = {}) {
+  try {
+    const userRef = yield call(handleUserProfile, {
+      userAuth: user,
+      additionalData,
+    })
+    const snapshot = yield userRef.get()
+    yield put(
+      signInSuccess({
+        id: snapshot.id,
+        ...snapshot.data(),
+      })
+    )
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export function* isUserAuthenticated() {
-    try {
+  try {
+    const userAuth = yield getCurrentUser()
+    console.log(userAuth + '  is checking')
 
-        const userAuth = yield getCurrentUser()
-        if(!userAuth) return
-        yield getSnapshotFromUserAuth(userAuth)
-        
-    } catch (error) {
-        console.log(error)
-    }
+    if (!userAuth) return
+    yield getSnapshotFromUserAuth(userAuth)
+  } catch (error) {
+    console.log(error)
+  }
 }
-
 
 export function* onCheckUserSession() {
- yield takeLatest(userTypes.CHECK_USER_SESSION, isUserAuthenticated)
-
-
+  yield takeLatest(userTypes.CHECK_USER_SESSION, isUserAuthenticated)
 }
 
+export function* emailSignIn({ payload: { email, password } }) {
+  try {
+    const { user } = yield auth.signInWithEmailAndPassword(email, password)
 
+    yield getSnapshotFromUserAuth(user)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export function* onSignInStart() {
+  yield takeLatest(userTypes.EMAIL_SIGN_IN_START, emailSignIn)
+}
 
 export default function* userSagas() {
-    yield all([
-        call(onCheckUserSession)
-    ])
+  yield all([call(onCheckUserSession), call(onSignInStart)])
 }

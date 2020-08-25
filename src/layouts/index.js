@@ -23,11 +23,11 @@ const Wrapper = styled.div`
 `
 
 const Layout = ({ children }) => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(checkUserSession());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(checkUserSession());
+  }, [dispatch]);
   return (
     <Provider store={store}>
       <ContextProvider>

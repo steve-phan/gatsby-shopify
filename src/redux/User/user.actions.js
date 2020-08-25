@@ -23,3 +23,10 @@ export const signInSuccess = user => ({
    type : userTypes.SIGN_IN_SUCCESS,
    payload : user
  })
+ 
+export const emailSignInStart = userCredentials => ({
+   type: userTypes.EMAIL_SIGN_IN_START,
+   payload : userCredentials
+ 
+ })
+ 

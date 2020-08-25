@@ -1,19 +1,40 @@
 const path = require(`path`)
 
-exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
-  if (stage === "build-html") {
+// Build live site 
+
+// exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
+//   if (stage === "build-html") {
+//     actions.setWebpackConfig({
+//       module: {
+//         rules: [
+//           {
+//             test: /firebase/,
+//             use: loaders.null(),
+//           },
+//         ],
+//       },
+//     })
+//   }
+// }
+
+exports.onCreateWebpackConfig = ({
+  stage,
+  actions,
+  getConfig
+}) => {
+  
     actions.setWebpackConfig({
-      module: {
-        rules: [
-          {
-            test: /firebase/,
-            use: loaders.null(),
-          },
-        ],
-      },
-    })
-  }
-}
+      externals: getConfig().externals.concat(function(context, request, callback) {
+        const regex = /^firebase(\/(.+))?/;
+        // exclude firebase products from being bundled, so they will be loaded using require() at runtime.
+        if (regex.test(request)) {
+          return callback(null, 'umd ' + request);
+        }
+        callback();
+      })
+    });
+
+};
 
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions

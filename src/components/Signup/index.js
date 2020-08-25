@@ -33,7 +33,7 @@ export default function Signup(props) {
     if (currentUser) {
       navigate('/')
     }
-  }, [currentUser, history])
+  }, [currentUser])
 
   const handleFormSubmit = e => {
     console.log('cliking')
