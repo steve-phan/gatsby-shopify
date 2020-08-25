@@ -5,6 +5,17 @@ const INITIAL_STATE = {
 }
 const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    // case userTypes.CHECK_USER_SESSION:
+    //   return {
+    //     ...state,
+    //     currentUser : action.payload
+    //   }
+    case userTypes.SIGN_IN_SUCCESS:
+      return {
+        ...state,
+        currentUser: action.payload,
+      }
+
     case userTypes.SIGN_IN_WITH_GOOGLE:
       return {
         ...state,

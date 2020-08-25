@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { StaticQuery, graphql } from 'gatsby'
 import styled from '@emotion/styled'
-import { Provider } from 'react-redux'
+import { Provider, useDispatch } from 'react-redux'
+
+import { getCurrentUser } from './../firebase/utils'
+
+import { checkUserSession } from './../redux/User/user.actions'
 
 import ContextProvider from '~/provider/ContextProvider'
 
@@ -10,7 +14,7 @@ import { GlobalStyle } from '~/utils/styles'
 import Navigation from '~/components/Navigation'
 
 import { store } from './../redux/createStore'
-import  "./styles.scss"
+import './styles.scss'
 
 const Wrapper = styled.div`
   margin: 0 auto;
@@ -19,8 +23,13 @@ const Wrapper = styled.div`
 `
 
 const Layout = ({ children }) => {
+  // const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   dispatch(checkUserSession());
+  // }, [dispatch]);
   return (
-    <Provider store={store} >
+    <Provider store={store}>
       <ContextProvider>
         <GlobalStyle />
         <StaticQuery
@@ -36,7 +45,7 @@ const Layout = ({ children }) => {
           render={data => (
             <>
               <Navigation siteTitle={data.site.siteMetadata.title} />
-              <div className='wrapper-layout'>
+              <div className="wrapper-layout">
                 {children}
                 <footer>
                   © {new Date().getFullYear()}, Built with

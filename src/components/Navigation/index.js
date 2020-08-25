@@ -5,6 +5,8 @@ import { Link } from 'gatsby'
 import { useSelector } from 'react-redux'
 
 import StoreContext from '~/context/StoreContext'
+
+import {auth} from './../../firebase/utils'
 // import { CartCounter, Container, Link, Wrapper } from './styles'
 
 import './styles.scss'
@@ -30,7 +32,8 @@ const Navigation = ({ siteTitle }) => {
     <div className='wrapper-navigation'>
       <div className='container-navigation'>
         <Link to="/" className="menulink-main" >{siteTitle}</Link>
-        <nav className='wrapper-nav'>
+  <button onClick={e => auth.signOut()} >logoug</button>
+         <nav className='wrapper-nav'>
           {currentUser ? (
             <Link to="/" className="menulink-nav" >Your Account</Link>
           ) : (
