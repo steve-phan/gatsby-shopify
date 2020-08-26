@@ -35,9 +35,13 @@ $maincolor : #034a6b;
     text-decoration: none;
     font-size: 1rem;
     line-height: 0;
+    margin-right: 10px;
     
     @media (max-width: 576px) {
       font-size: 1.2rem;
+    }
+    &:hover {
+        color : #ddd;
     }
 }
 .registation-link, .login-link {
@@ -60,7 +64,7 @@ $maincolor : #034a6b;
     top: -15px;
     border: 1px solid white;
     border-radius: 50%;
-    padding: 2px;
+    padding: 0px 3px;
     background: white;
     color: red;
     outline: none;

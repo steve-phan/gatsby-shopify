@@ -5,17 +5,16 @@ import FormInput from '../../ShareForm/FormInput'
 import Button from '../../ShareForm/Button'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
 //import firebase
 import { auth, handleUserProfile } from './../../firebase/utils'
-import { signUpUser } from '../../redux/User/user.actions'
+import { signUpUser, resetError , userError } from '../../redux/User/user.actions'
 
 import './styles.scss'
-import FacebookIcon from './../../assets/facebook.svg'
 import SocialLogin from '../../ShareForm/SocialLogin'
 
 const mapState = ({ user }) => ({
   currentUser: user.currentUser,
+  errors: user.errors,
 })
 
 export default function Signup(props) {
@@ -24,33 +23,41 @@ export default function Signup(props) {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
 
-  const { currentUser } = useSelector(mapState)
+  const { currentUser, errors } = useSelector(mapState)
   const dispatch = useDispatch()
-  const history = useHistory()
 
   useEffect(() => {
-    console.log(history)
+    dispatch(resetError())
     if (currentUser) {
       navigate('/')
     }
   }, [currentUser])
 
   const handleFormSubmit = e => {
-    console.log('cliking')
     e.preventDefault()
-    if (password === confirmPassword) {
+    if (password !== confirmPassword) {
+   dispatch(userError('Confirmpasswort didnt match'))
+    } else {
       auth
-        .createUserWithEmailAndPassword(email, password)
-        .then(user => {
-          const additionalData = { displayName }
-          const userAuth = user.user
-          handleUserProfile({ userAuth, additionalData })
+      .createUserWithEmailAndPassword(email, password)
+      .then(user => {
+        const additionalData = { displayName }
+        const userAuth = user.user
+        handleUserProfile({ userAuth, additionalData })
 
-          dispatch(signUpUser())
-        })
-        .catch(err => {
-          console.log(err)
-        })
+        dispatch(signUpUser())
+      })
+      .catch(err => {
+        console.log(err)
+        let errSign;
+        if ( err.code === 'auth/weak-password'){
+          errSign = 'Password should be at least 6 characters'
+        }
+        if ( err.code === 'auth/email-already-in-use'){
+          errSign = 'The email address is already in use by another account'
+        }
+        dispatch(userError(errSign))
+      })
     }
   }
 
@@ -92,10 +99,8 @@ export default function Signup(props) {
           handleChange={e => setConfirmPassword(e.target.value)}
           required
         />
-        <span>
-          Your password should be at least 8 characters long, contain both lower
-          and upper-case letters, and include either a number or a symbol.
-        </span>
+        <p className="errors">{errors}</p>
+
         <Button type="submit">Submit </Button>
       </form>
     </div>

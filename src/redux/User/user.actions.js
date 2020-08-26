@@ -29,4 +29,10 @@ export const emailSignInStart = userCredentials => ({
    payload : userCredentials
  
  })
- 
+ export const userError = err => ({
+   type : userTypes.USER_ERROR,
+   payload : err
+ })
+ export const resetError = () => ({
+    type : userTypes.RESET_ERROR
+ })

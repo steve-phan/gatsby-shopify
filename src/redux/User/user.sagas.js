@@ -1,6 +1,6 @@
 import { takeLatest, call, all, put } from 'redux-saga/effects'
 import userTypes from './user.types'
-import { signInSuccess } from './user.actions'
+import { signInSuccess, userError } from './user.actions'
 import { getCurrentUser, handleUserProfile, auth } from '../../firebase/utils'
 
 export function* getSnapshotFromUserAuth(user, additionalData = {}) {
@@ -43,7 +43,7 @@ export function* emailSignIn({ payload: { email, password } }) {
 
     yield getSnapshotFromUserAuth(user)
   } catch (error) {
-    console.log(error)
+    yield put(userError('Wrong password or Email'))
   }
 }
 
