@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import reduce from 'lodash/reduce'
 import PropTypes from 'prop-types'
 import { Link } from 'gatsby'
@@ -6,11 +6,12 @@ import { useSelector } from 'react-redux'
 
 import StoreContext from '~/context/StoreContext'
 
-import {auth} from './../../firebase/utils'
+import { auth } from './../../firebase/utils'
 // import { CartCounter, Container, Link, Wrapper } from './styles'
 
 import './styles.scss'
 import ShoppingCart from './../../assets/shopping.svg'
+import Button from '../../ShareForm/Button'
 const mapState = ({ user }) => ({
   currentUser: user.currentUser,
 })
@@ -24,21 +25,49 @@ const useQuantity = () => {
   return [total !== 0, total]
 }
 
-const Navigation = ({ siteTitle }) => {
+const Navigation = (props) => {
   const [hasItems, quantity] = useQuantity()
+  const [openmodal, setOpenmodal] = useState()
   const { currentUser } = useSelector(mapState)
-
+  const openBoard = () => {
+ console.log(props)
+    const modal = document.getElementById('openmodal-btn')
+    window.addEventListener('click', e => {
+      if (e.target === modal) {
+        setOpenmodal('openmodal')
+      } else {
+        setOpenmodal('')
+      }
+    })
+  }
   return (
-    <div className='wrapper-navigation'>
-      <div className='container-navigation'>
-        <Link to="/" className="menulink-main" >{siteTitle}</Link>
-  <button onClick={e => auth.signOut()} >logoug</button>
-         <nav className='wrapper-nav'>
+    <div className="wrapper-navigation">
+      <div className="container-navigation">
+        <Link to="/" className="menulink-main">
+          Welove Tech
+        </Link>
+        <nav className="wrapper-nav">
+          <div  className={`account-modal ${openmodal}`}>
+            <div className="modal-link">
+              <Link to='/' >Your Address</Link>
+            </div>
+            <div className="modal-link">
+              <Link to='/'>Your oder Cart</Link>
+            </div>
+            <div className="modal-link">
+              <Link to='/' onClick={e => auth.signOut()}>Sign out</Link>
+            </div>
+          </div>
           {currentUser ? (
-            <Link to="/" className="menulink-nav" >Your Account</Link>
+            <div onClick={openBoard}>
+              <a  id="openmodal-btn" className="menulink-nav navbar-btn">
+                Your Account
+              </a>
+            </div>
           ) : (
+            // <Link to="/" className="menulink-nav" >Your Account</Link>
             <>
-              <Link  to="/login" className="menulink-nav login-link">
+              <Link to="/login" className="menulink-nav login-link">
                 Login
               </Link>
               <Link to="/registation" className="menulink-nav registation-link">
@@ -47,9 +76,9 @@ const Navigation = ({ siteTitle }) => {
             </>
           )}
 
-          <Link  to="/cart" className="menulink-nav wrapper-cart">
-           <ShoppingCart className='cartlogo' />
-            {hasItems && <span className='cartcounter' >{quantity}</span>}
+          <Link to="/cart" className="menulink-nav wrapper-cart">
+            <ShoppingCart className="cartlogo" />
+            {hasItems && <span className="cartcounter">{quantity}</span>}
           </Link>
         </nav>
       </div>
