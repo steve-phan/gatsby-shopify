@@ -51,6 +51,7 @@ $maincolor : #034a6b;
     &:hover {
         color: #ddd;
     }
+
 }
 
 .registation-link,
@@ -127,6 +128,10 @@ $maincolor : #034a6b;
         &:hover {
           
             background: #e1e4e8;
+        }
+        a {
+            text-decoration : none;
+            color : black;
         }
     }
 

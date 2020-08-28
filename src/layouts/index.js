@@ -23,11 +23,11 @@ const Wrapper = styled.div`
 `
 
 const Layout = ({ children }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(checkUserSession());
-  }, [dispatch]);
+    dispatch(checkUserSession())
+  }, [dispatch])
   return (
     <Provider store={store}>
       <ContextProvider>
@@ -46,11 +46,9 @@ const Layout = ({ children }) => {
             <>
               <Navigation siteTitle={data.site.siteMetadata.title} />
               <div className="wrapper-layout">
-                {children}
+                <div className="wrapper-main">{children}</div>
                 <footer>
-                  © {new Date().getFullYear()}, Built with
-                  {` `}
-                  <a href="https://www.gatsbyjs.org">Gatsby</a>
+                  <span>© {new Date().getFullYear()}, WeloveTech</span>
                 </footer>
               </div>
             </>

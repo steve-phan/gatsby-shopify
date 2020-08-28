@@ -36,3 +36,7 @@ export const emailSignInStart = userCredentials => ({
  export const resetError = () => ({
     type : userTypes.RESET_ERROR
  })
+ export const userSignOut = ()=> ({
+    type: userTypes.USER_SIGN_OUT,
+    payload : null
+ })

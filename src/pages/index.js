@@ -6,11 +6,13 @@ import ProductGrid from '~/components/ProductGrid'
 
 const IndexPage = () => (
   <>
-    <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
+    <SEO
+      title="Home"
+      keywords={[`restaurant`, `food`, `asian footd`, `delivery food`]}
+    />
     <h1>Hi people</h1>
-    <p>Welcome to your new Shop powered by Gatsby and Shopify.</p>
+    <p>Welcome to our Restaurant.</p>
     <ProductGrid />
-    <Link to="/page-2/">Go to page 2</Link>
   </>
 )
 

@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import reduce from 'lodash/reduce'
 import PropTypes from 'prop-types'
 import { Link } from 'gatsby'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 import StoreContext from '~/context/StoreContext'
 
@@ -12,11 +12,12 @@ import { auth } from './../../firebase/utils'
 import './styles.scss'
 import ShoppingCart from './../../assets/shopping.svg'
 import Button from '../../ShareForm/Button'
+import { userSignOut } from '../../redux/User/user.actions'
 const mapState = ({ user }) => ({
   currentUser: user.currentUser,
 })
 
-const useQuantity = () => {
+export const useQuantity = () => {
   const {
     store: { checkout },
   } = useContext(StoreContext)
@@ -29,6 +30,7 @@ const Navigation = (props) => {
   const [hasItems, quantity] = useQuantity()
   const [openmodal, setOpenmodal] = useState()
   const { currentUser } = useSelector(mapState)
+  const dispatch  = useDispatch()
   const openBoard = () => {
  console.log(props)
     const modal = document.getElementById('openmodal-btn')
@@ -40,22 +42,32 @@ const Navigation = (props) => {
       }
     })
   }
+  const handleSignOut = () => {
+    auth.signOut()
+    .then(()=>{
+      dispatch(userSignOut())
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+    
+  }
   return (
     <div className="wrapper-navigation">
       <div className="container-navigation">
         <Link to="/" className="menulink-main">
-          Welove Tech
+          WeLoveTech
         </Link>
         <nav className="wrapper-nav">
           <div  className={`account-modal ${openmodal}`}>
             <div className="modal-link">
-              <Link to='/' >Your Address</Link>
+              <Link to='/dashboard' >Your Address</Link>
             </div>
             <div className="modal-link">
-              <Link to='/'>Your oder Cart</Link>
+              <Link to='/cart'>Your oder Cart</Link>
             </div>
             <div className="modal-link">
-              <Link to='/' onClick={e => auth.signOut()}>Sign out</Link>
+              <Link to='/' onClick={handleSignOut}>Sign out</Link>
             </div>
           </div>
           {currentUser ? (

@@ -3,8 +3,6 @@ import { Link } from 'gatsby'
 
 import StoreContext from '~/context/StoreContext'
 
-import './styles.scss'
-
 const LineItem = props => {
   const { item } = props
   const {
@@ -16,7 +14,7 @@ const LineItem = props => {
     <img
       src={item.variant.image.src}
       alt={`${item.title} product shot`}
-      height="60px"
+      width="100px"
     />
   ) : null
 
@@ -28,22 +26,38 @@ const LineItem = props => {
 
   const handleRemove = () => {
     removeLineItem(client, checkout.id, item.id)
+    {
+      console.log(item.variant.priceV2)
+    }
   }
+  const totalItemPay = item.quantity * item.variant.priceV2.amount
 
   return (
-    <div className='wrapper-LineItem'>
-      {console.log(item)}
-      <Link to={`/product/${item.variant.product.handle}/`}>
-        {variantImage}
-      </Link>
-      <p>
-        {item.title}
-        {`  `}
-        {item.variant.title === !'Default Title' ? item.variant.title : ''}
-      </p>
-      {selectedOptions}
-      {item.quantity}
-      <button onClick={handleRemove}>Remove</button>
+    <div>
+      <div className="wrapper-LineItem">
+        <div className="cartItemImage">
+          <Link to={`/product/${item.variant.product.handle}/`}>
+            {variantImage}
+          </Link>
+        </div>
+
+        <div className="titleItem">
+          <Link to={`/product/${item.variant.product.handle}/`}>
+            {item.title}
+          </Link>
+        </div>
+
+        {/* {item.variant.title === !'Default Title' ? item.variant.title : ''} */}
+
+        {/* {selectedOptions} */}
+        <div className="oderItem">
+           Qty: {item.quantity}
+          <p className="totalPrice">
+          € {totalItemPay}
+          </p>
+          <span onClick={handleRemove}>delete</span>
+        </div>
+      </div>
     </div>
   )
 }
