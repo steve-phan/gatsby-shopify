@@ -10,18 +10,18 @@ import StoreContext from '~/context/StoreContext'
 //   PriceTag
 // } from './styles'
 import './styles.scss'
+import Button from '../../ShareForm/Button'
 
 const ProductGrid = () => {
-  const { store: {checkout} } = useContext(StoreContext)
+  const {
+    addVariantToCart,
+    store: { client, adding, checkout },
+  } = useContext(StoreContext)
+  // const productVariant = client.product.helpers.variantForOptions()
   const { allShopifyProduct } = useStaticQuery(
     graphql`
       query {
-        allShopifyProduct(
-          sort: {
-            fields: [createdAt]
-            order: DESC
-          }
-        ) {
+        allShopifyProduct(sort: { fields: [createdAt], order: DESC }) {
           edges {
             node {
               id
@@ -41,6 +41,7 @@ const ProductGrid = () => {
               }
               variants {
                 price
+                shopifyId
               }
             }
           }
@@ -49,30 +50,55 @@ const ProductGrid = () => {
     `
   )
 
-  const getPrice = price => Intl.NumberFormat(undefined, {
-    currency: checkout.currencyCode ? checkout.currencyCode : 'EUR',
-    minimumFractionDigits: 2,
-    style: 'currency',
-  }).format(parseFloat(price ? price : 0))
+  const getPrice = price =>
+    Intl.NumberFormat(undefined, {
+      currency: checkout.currencyCode ? checkout.currencyCode : 'EUR',
+      minimumFractionDigits: 2,
+      style: 'currency',
+    }).format(parseFloat(price ? price : 0))
 
   return (
-    <div className='wrraper-productGrid'>
-      {allShopifyProduct.edges
-        ? allShopifyProduct.edges.map(({ node: { id, handle, title, images: [firstImage], variants: [firstVariant] } }) => (
-          <div className='product-grid' key={id} >
-            <Link to={`/product/${handle}/`}>
-              {firstImage && firstImage.localFile &&
-                (<Image
-                 className='image-ProductGrid'
-                  fluid={firstImage.localFile.childImageSharp.fluid}
-                  alt={handle}
-                />)}
-            </Link>
-            <span className='title-productGrid'>{title}</span>
-            <span className='pricetag-productGrid'>{getPrice(firstVariant.price)}</span>
-          </div>
-        ))
-        : <p>No Products found!</p>}
+    <div className="wrraper-productGrid">
+      {allShopifyProduct.edges ? (
+        allShopifyProduct.edges.map(
+          ({
+            node: {
+              id,
+              handle,
+              title,
+              images: [firstImage],
+              variants: [firstVariant],
+            },
+          }) => (
+            <div className="product-grid" key={id}>
+              <Link to={`/product/${handle}/`}>
+                {firstImage && firstImage.localFile && (
+                  <Image
+                    className="image-ProductGrid"
+                    fluid={firstImage.localFile.childImageSharp.fluid}
+                    alt={handle}
+                  />
+                )}
+              </Link>
+              <Link to={`/product/${handle}/`}>
+                <span className="title-productGrid">{title}</span>
+              </Link>
+              <div className="fastbuy-btn">
+                <span className="pricetag-productGrid">
+                  {getPrice(firstVariant.price)}
+                </span>
+                <Button
+                  onClick={() => addVariantToCart(firstVariant.shopifyId, 1)}
+                >
+                  Add to cart
+                </Button>
+              </div>
+            </div>
+          )
+        )
+      ) : (
+        <p>No Products found!</p>
+      )}
     </div>
   )
 }

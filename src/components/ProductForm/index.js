@@ -4,6 +4,7 @@ import isEqual from 'lodash/isEqual'
 import PropTypes from 'prop-types'
 
 import StoreContext from '~/context/StoreContext'
+import Button from '../../ShareForm/Button'
 
 const ProductForm = ({ product }) => {
   const {
@@ -33,7 +34,6 @@ const ProductForm = ({ product }) => {
         // this checks the currently selected variant for availability
         console.log(fetchedProduct)
         const result = fetchedProduct.variants.filter(
- 
           variant => variant.id === productVariant.shopifyId
         )
         if (result.length > 0) {
@@ -104,7 +104,7 @@ const ProductForm = ({ product }) => {
   return (
     <>
       <h3>{price}</h3>
-      {options.map(({ id, name, values }, index) => (
+      {/* {options.map(({ id, name, values }, index) => (
         <React.Fragment key={id}>
           <label htmlFor={name}>{name} </label>
           <select
@@ -124,25 +124,28 @@ const ProductForm = ({ product }) => {
           </select>
           <br />
         </React.Fragment>
-      ))}
-      <label htmlFor="quantity">Quantity </label>
-      <input
-        type="number"
-        id="quantity"
-        name="quantity"
-        min="1"
-        step="1"
-        onChange={handleQuantityChange}
-        value={quantity}
-      />
+      ))} */}
+      <div className="quantity-select">
+        <label htmlFor="quantity">Quantity </label>
+        <input
+          type="number"
+          id="quantity"
+          name="quantity"
+          min="1"
+          step="1"
+          onChange={handleQuantityChange}
+          value={quantity}
+        />
+      </div>
       <br />
-      <button
+
+      <Button
         type="submit"
         disabled={!available || adding}
         onClick={handleAddToCart}
       >
         Add to Cart
-      </button>
+      </Button>
       {!available && <p>This Product is out of Stock!</p>}
     </>
   )

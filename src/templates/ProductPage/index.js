@@ -5,7 +5,6 @@ import Image from 'gatsby-image'
 import SEO from '~/components/seo'
 import ProductForm from '~/components/ProductForm'
 
-
 import './styles.scss'
 
 const ProductPage = ({ data }) => {
@@ -14,23 +13,24 @@ const ProductPage = ({ data }) => {
   return (
     <>
       <SEO title={product.title} description={product.description} />
-      <div className='container-ProductPage'>
-        <div className='twocolumgrid'>
-          <div className='gridleft'>
+      <div className="container-ProductPage">
+        <div className="twocolumgrid">
+          <div className="gridleft">
             {product.images.map(image => (
               <Image
-               className='image-ProductPage'
+                className="image-ProductPage"
                 fluid={image.localFile.childImageSharp.fluid}
                 key={image.id}
                 alt={product.title}
               />
             ))}
           </div>
-          <div className='gridright'>
-            <h1 className='productTitle'>{product.title}</h1>
-            <div className='ProductDescription'
+          <div className="gridright">
+            <h2 className="productTitle">{product.title}</h2>
+            {/* <div
+              className="ProductDescription"
               dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
-            />
+            /> */}
             <ProductForm product={product} />
           </div>
         </div>

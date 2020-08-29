@@ -10,6 +10,7 @@ import { useQuantity } from '../Navigation'
 import { userAddAddress } from './../../redux/User/user.actions'
 import { auth, firestore, getCurrentUser } from './../../firebase/utils'
 import { navigate } from 'gatsby'
+import ProductGrid from '../ProductGrid'
 
 const mapState = ({ user }) => ({
   currentUser: user.currentUser,
@@ -134,7 +135,10 @@ const Cart = () => {
           </div>
         </div>
       ) : (
-        <h1>Your oders is empty</h1>
+        <div className="wrap-empty">
+          <h3 className="cart-empty">Your oders is empty</h3>
+          <ProductGrid />
+        </div>
       )}
     </div>
   )

@@ -26,13 +26,13 @@ export const useQuantity = () => {
   return [total !== 0, total]
 }
 
-const Navigation = (props) => {
+const Navigation = props => {
   const [hasItems, quantity] = useQuantity()
   const [openmodal, setOpenmodal] = useState()
   const { currentUser } = useSelector(mapState)
-  const dispatch  = useDispatch()
+  const dispatch = useDispatch()
   const openBoard = () => {
- console.log(props)
+    console.log(props)
     const modal = document.getElementById('openmodal-btn')
     window.addEventListener('click', e => {
       if (e.target === modal) {
@@ -43,14 +43,14 @@ const Navigation = (props) => {
     })
   }
   const handleSignOut = () => {
-    auth.signOut()
-    .then(()=>{
-      dispatch(userSignOut())
-    })
-    .catch((err)=>{
-      console.log(err)
-    })
-    
+    auth
+      .signOut()
+      .then(() => {
+        dispatch(userSignOut())
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
   return (
     <div className="wrapper-navigation">
@@ -59,20 +59,22 @@ const Navigation = (props) => {
           WeLoveTech
         </Link>
         <nav className="wrapper-nav">
-          <div  className={`account-modal ${openmodal}`}>
+          <div className={`account-modal ${openmodal}`}>
             <div className="modal-link">
-              <Link to='/dashboard' >Your Address</Link>
+              <Link to="/dashboard">Your Address</Link>
             </div>
             <div className="modal-link">
-              <Link to='/cart'>Your oder Cart</Link>
+              <Link to="/cart">Your oder Cart</Link>
             </div>
             <div className="modal-link">
-              <Link to='/' onClick={handleSignOut}>Sign out</Link>
+              <Link to="/" onClick={handleSignOut}>
+                Sign out
+              </Link>
             </div>
           </div>
           {currentUser ? (
-            <div onClick={openBoard}>
-              <a  id="openmodal-btn" className="menulink-nav navbar-btn">
+            <div onClick={openBoard} className="wrap-account">
+              <a id="openmodal-btn" className="menulink-nav navbar-btn">
                 Your Account
               </a>
             </div>
@@ -90,7 +92,10 @@ const Navigation = (props) => {
 
           <Link to="/cart" className="menulink-nav wrapper-cart">
             <ShoppingCart className="cartlogo" />
-            {hasItems && <span className="cartcounter">{quantity}</span>}
+          </Link>
+          <Link to="/cart">
+            {' '}
+            {hasItems && <div className="cartcounter">{quantity}</div>}
           </Link>
         </nav>
       </div>
