@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import FormInput from '../../ShareForm/FormInput'
 import { useSelector, useDispatch } from 'react-redux'
+import './styles.scss'
 
 import {
   auth,
@@ -69,8 +70,9 @@ export default function DashBoard() {
   if (!currentUser) {
     return (
       <div className="formWrap">
-        <p>
-          Just <Link to="/login">Login</Link> to get access this page
+        <p className="access-dashboard">
+          Just <Link to="/login">Login</Link> or{' '}
+          <Link to="/registation">Register</Link> to get access this page
         </p>
       </div>
     )

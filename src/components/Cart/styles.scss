@@ -54,6 +54,22 @@
         }
     }
 
+    @media (max-width : 576px) {
+        width: 96%;
+        margin: 0 auto;
+        border-radius: 4px;
+        border: 1px #ddd solid;
+        background-color: #f3f3f3;
+
+        .oderItem {
+            width: 60px;
+        }
+
+        .cartItemImage {}
+
+
+    }
+
 }
 
 .cartDetails-wrap {
@@ -102,6 +118,11 @@
     background-color: #f3f3f3;
     align-items: center;
     margin-bottom: 20px;
+
+    @media (max-width : 576px) {
+        width: 90%;
+        max-width: 86%;
+    }
 
     .subtotal {
         padding: 8px 0;
