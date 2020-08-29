@@ -5,7 +5,8 @@ import { Container } from '~/utils/styles'
 
 const CartPage = () => (
   <Container>
-    <h1>Cart</h1>
+    <h2 className="pageHeadline">Your Cart</h2>
+
     <Cart />
   </Container>
 )

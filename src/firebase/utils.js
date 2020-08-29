@@ -3,6 +3,10 @@ import { firebaseConfig } from './config'
 import 'firebase/auth'
 import 'firebase/firestore'
 
+//redux Import
+import { userAddAddress } from './../redux/User/user.actions'
+import { useDispatch } from 'react-redux'
+
 firebase.initializeApp(firebaseConfig)
 
 export const auth = firebase.auth()
@@ -45,6 +49,9 @@ export const getCurrentUser = () => {
   return new Promise((resolve, reject) => {
     const unsubscribe = auth.onAuthStateChanged(userAuth => {
       // console.log(auth.currentUser)
+      if (!userAuth) {
+        return
+      }
       unsubscribe()
       resolve(userAuth)
     }, reject)

@@ -10,8 +10,7 @@ const IndexPage = () => (
       title="Home"
       keywords={[`restaurant`, `food`, `asian footd`, `delivery food`]}
     />
-    <h1>Hi people</h1>
-    <p>Welcome to our Restaurant.</p>
+    <h2 className="pageHeadline">Welcome to our Restaurant.</h2>
     <ProductGrid />
   </>
 )

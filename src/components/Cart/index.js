@@ -1,12 +1,29 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import emailjs from 'emailjs-com'
+
+import { useSelector, useDispatch } from 'react-redux'
 
 import StoreContext from '~/context/StoreContext'
 import LineItem from './LineItem'
 import './styles.scss'
 import { useQuantity } from '../Navigation'
+import { userAddAddress } from './../../redux/User/user.actions'
+import { auth, firestore, getCurrentUser } from './../../firebase/utils'
+import { navigate } from 'gatsby'
+
+const mapState = ({ user }) => ({
+  currentUser: user.currentUser,
+})
 
 const Cart = () => {
+  const { currentUser } = useSelector(mapState)
+  const [displayName, setDisplayName] = useState('')
+  const [street, setStreet] = useState('')
+  const [postcode, setPostcode] = useState('')
+  const [city, setCity] = useState('')
+  const [floor, setFloor] = useState('')
+
+  const dispatch = useDispatch()
   const [hasItems, quantity] = useQuantity()
   const {
     store: { checkout },
@@ -17,6 +34,27 @@ const Cart = () => {
     // oder_hello : checkout.lineItems[0].title
   }
 
+  useEffect(() => {
+    getCurrentUser().then(user => {
+      if (user) {
+        const userRef = firestore.doc(`users/${user.uid}`)
+        // userRef.update({ ...additionalData })
+        userRef
+          .get()
+          .then(doc => {
+            if (doc.data().street) {
+              setDisplayName(doc.data().displayName)
+              setStreet(doc.data().street)
+              setPostcode(doc.data().postcode)
+              setCity(doc.data().city)
+              setFloor(doc.data().floor)
+            }
+          })
+          .catch(err => console.log(err))
+      }
+    })
+  }, [currentUser])
+
   // emailjs.send('gmail', 'template_vNBZtXYN', {
   //   reply_to: 'phanhaingoc@gmail.com',
   //   to_name: 'KHANH',
@@ -24,6 +62,10 @@ const Cart = () => {
   //   message_html: 'chan lam roi',
   // })
   const handleCheckout = () => {
+    if (!street) {
+      alert('update your address to Oder')
+      navigate('/dashboard')
+    }
     // emailjs
     //   .send(
     //     'gmail',
@@ -73,6 +115,21 @@ const Cart = () => {
               >
                 Check out
               </button>
+            </div>
+            <div className="cartDetails delivery-address">
+              <h4>Delivery Address </h4>
+              <hr />
+              {street ? (
+                <div className="user-address">
+                  <h5> {displayName} </h5>
+                  <span> {street} </span>
+                  <span>{floor} </span>
+                  <span> {postcode} </span>
+                  <span>{city} </span>
+                </div>
+              ) : (
+                <p> update your address to Oder</p>
+              )}
             </div>
           </div>
         </div>
