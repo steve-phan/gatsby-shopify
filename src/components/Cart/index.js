@@ -31,7 +31,7 @@ const Cart = () => {
   } = useContext(StoreContext)
   const templateParams = {
     message_html: 'this is message',
-    from_name: 'We can code',
+    from_name: 'We can code - this is line for test fearture/add-to-cart',
     // oder_hello : checkout.lineItems[0].title
   }
 
